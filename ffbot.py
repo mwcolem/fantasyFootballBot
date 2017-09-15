@@ -11,7 +11,6 @@ BOT_ID = os.environ.get("BOT_ID")
 AT_BOT = "<@" + BOT_ID + ">"
 TEAM_URL_PART1="http://games.espn.com/ffl/clubhouse?leagueId=1172646&teamId="
 TEAM_URL_PART2="&seasonId=2017"
-LEAGUE="1172646"
 TEAMS={'coleman': 1, 'kyle': 2, 'isaac': 4, 'joey': 5, 'bradley':3, 'clint': 12, 'morris': 9, 'ragan':13, 'laura': 7, 'frank': 10, 'gary': 11, 'mark': 8}
 
 # instantiate Slack & Twilio clients
@@ -37,7 +36,7 @@ def handle_command(command, channel):
         for row in playerList:
             players.append(row.find('a').getText())
         
-        print(players)
+        response = players
 
     slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
