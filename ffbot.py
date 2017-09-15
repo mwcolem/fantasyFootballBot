@@ -1,7 +1,6 @@
 import os
 import time
-from urllib.request import Request
-from urllib.request import urlopen
+import urllib.request
 from bs4 import BeautifulSoup
 from slackclient import SlackClient
 
@@ -19,17 +18,18 @@ TEAMS = {'coleman': 1, 'kyle': 2, 'isaac': 4, 'joey': 5,
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 
 def build_url(name):
-    return TEAM_URL_PART1 + TEAMS.get(name) + TEAM_URL_PART2
+    return TEAM_URL_PART1 + str(TEAMS.get(name)) + TEAM_URL_PART2
 
 def get_soup(url):
-    req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    page = urlopen(req).read()
-    return BeautifulSoup(page, "html5lib")
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    page = urllib.request.urlopen(req).read()
+    soup = BeautifulSoup(page, "html.parser")
+    return soup
 
 def handle_command(command, channel):
     response = "Not sure what you mean by " + command
     
-    if (TEAMS.has_key(command)):
+    if command in TEAMS.keys():
         url = build_url(command)
 
         soup = get_soup(url)
