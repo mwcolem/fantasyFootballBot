@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 def get_soup(url):
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     page = urlopen(req).read()
-    return BeautifulSoup(page, "html5lib")
+    return BeautifulSoup(page, "html.parser")
 
 team_url = "http://games.espn.com/ffl/scoreboard?leagueId=1172646&seasonId=2017"
 soup = get_soup(team_url)
