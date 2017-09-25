@@ -68,6 +68,12 @@ def handle_command(command, channel):
 
         response = scoreOutput
 
+    elif re.match('matt', command):
+        response = "Did you mean Coleman or Morris?"
+        
+    elif re.match('dan', command):
+        response = "Did you mean Bradley or Ragan?"
+
     slack_client.api_call("chat.postMessage", channel=channel,
                           text=response, as_user=True)
 
